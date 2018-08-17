@@ -1,0 +1,20 @@
+html, body {
+  margin: 0;
+}
+
+#content {
+  width: 30%;
+  margin: 50px auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+article {
+  margin-top: 5px;
+  background: rgb(240,240,240);
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 10px;
+}
