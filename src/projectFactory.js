@@ -39,16 +39,16 @@ const Project = (name, description) => {
            addTodo,
            asJSON } 
 }
-
+// Project to-do factory
 const Todo = (name, description, dueTime, priority) => {
-  let isComplete = false;
+  let isCompleted = false;
   const getName = () => name;
   const getDescription  = () => description;
   const getDueTime = () => dueTime;
   const getPriority = () => priority;
   const getCompleted = () => isComplete;
   const setCompleted = () => { 
-    isComplete === false ? isComplete = true : isComplete = false;
+    isCompleted === false ? isCompleted = true : isCompleted = false;
   }
 
   return { getName, 
