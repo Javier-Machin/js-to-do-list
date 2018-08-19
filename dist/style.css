@@ -18,3 +18,7 @@ article {
   border-radius: 4px;
   padding: 10px;
 }
+
+.to-do-list {
+  font-weight: normal;
+}

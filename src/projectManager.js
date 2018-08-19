@@ -2,6 +2,7 @@ import { Project } from './projectFactory'
 
 const ProjectManager = (() => {
 
+  // Populates the projects array with either the stored projects or a default one
   const load = () => {
     const storage = window.localStorage;
     const projects = [];
@@ -10,7 +11,8 @@ const ProjectManager = (() => {
     (localProjectsFound) ? deserializer() : newDefaultProject();
 
     return projects
-      
+    
+    // Builds the objects from the serialized data in local storage  
     function deserializer() {
       console.log("Stored projects found!");
         
@@ -22,6 +24,7 @@ const ProjectManager = (() => {
 
         const newProject = Project(project["name"], project["description"]);
 
+        // Builds the to-do objects nested in each project
         for (let todo in project["todos"]) {
           newProject.addTodo(
             project["todos"][todo]["name"], 
@@ -34,7 +37,7 @@ const ProjectManager = (() => {
         projects.push(newProject);
       }
     }
-
+    // Creates a new default project
     function newDefaultProject() {
       const defaultProject = Project("Create a repo", "Steps to create new git repository");
 
@@ -54,14 +57,18 @@ const ProjectManager = (() => {
       );
 
       const projectsJSON = {};
-
+      
+      // Use project's name as key and the formated project as value for serialization
       projectsJSON[defaultProject.getName()] = defaultProject.asJSON();
       
+      // Save projects as JSON in local storage
       storage.setItem("projects", JSON.stringify(projectsJSON));
-      console.log(storage.getItem("projects"));
+
+      // Add the project to projects array
       projects.push(defaultProject);
     }
   }
+
   return { load } 
 })();
 

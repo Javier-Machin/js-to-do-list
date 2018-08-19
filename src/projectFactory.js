@@ -39,7 +39,8 @@ const Project = (name, description) => {
            addTodo,
            asJSON } 
 }
-// Project to-do factory
+
+// Project todos factory
 const Todo = (name, description, dueTime, priority) => {
   let isCompleted = false;
   const getName = () => name;
