@@ -13,6 +13,7 @@ const Render = (projects) => {
     projectContainer.addEventListener("click", () => {
       let todoList = document.querySelector(".to-do-list");
 
+      // Toggle to-do list
       (todoList) ? projectContainer.removeChild(todoList) : 
                    RenderTodo(projectContainer, project);
     });

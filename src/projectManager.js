@@ -2,9 +2,11 @@ import { Project } from './projectFactory'
 
 const ProjectManager = (() => {
 
+  const storage = window.localStorage;
+
   // Populates the projects array with either the stored projects or a default one
   const load = () => {
-    const storage = window.localStorage;
+    
     const projects = [];
     const localProjectsFound = !!storage.getItem("projects");
 
@@ -37,6 +39,7 @@ const ProjectManager = (() => {
         projects.push(newProject);
       }
     }
+
     // Creates a new default project
     function newDefaultProject() {
       const defaultProject = Project("Create a repo", "Steps to create new git repository");
@@ -61,15 +64,20 @@ const ProjectManager = (() => {
       // Use project's name as key and the formated project as value for serialization
       projectsJSON[defaultProject.getName()] = defaultProject.asJSON();
       
-      // Save projects as JSON in local storage
-      storage.setItem("projects", JSON.stringify(projectsJSON));
-
+      // Save the default project as JSON in local storage
+      save(projectsJSON);
+      
       // Add the project to projects array
       projects.push(defaultProject);
     }
+
   }
 
-  return { load } 
+  function save(projectsJSON) { 
+    storage.setItem("projects", JSON.stringify(projectsJSON));
+  }
+
+  return { load, save } 
 })();
 
 export { ProjectManager }
