@@ -1,12 +1,11 @@
 import { Project } from './projectFactory'
 
-const ProjectManager = () => {
+const ProjectManager = (() => {
 
   const load = () => {
     const storage = window.localStorage;
     const projects = [];
     const localProjectsFound = !!storage.getItem("projects");
-
 
     (localProjectsFound) ? deserializer() : newDefaultProject();
 
@@ -49,23 +48,21 @@ const ProjectManager = () => {
 
       defaultProject.addTodo(
         "Initialize the repo", 
-        "enter the command 'git init'",
+        "Enter the command 'git init'",
         Date().toLocaleString(),
         "normal"
       );
 
-      let projectsJSON = {};
+      const projectsJSON = {};
 
-      projectsJSON[String(defaultProject.getName())] = defaultProject.asJSON();
-      projectsJSON[String(defaultProject.getName()+ "2")] = defaultProject.asJSON();
+      projectsJSON[defaultProject.getName()] = defaultProject.asJSON();
       
       storage.setItem("projects", JSON.stringify(projectsJSON));
-
-      projects.push(defaultProject);
+      console.log(storage.getItem("projects"));
       projects.push(defaultProject);
     }
   }
   return { load } 
-}
+})();
 
 export { ProjectManager }

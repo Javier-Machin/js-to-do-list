@@ -1,8 +1,6 @@
-import { Project } from './projectFactory'
 import { ProjectManager } from './projectManager'
 
-const projectManager = ProjectManager();
-const projects = projectManager.load();
+const projects = ProjectManager.load();
 
 renderProjects(projects);
 
