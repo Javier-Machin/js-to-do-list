@@ -32,28 +32,14 @@ const Render = (projects) => {
       
       itemName.innerHTML = todo.getName();
       itemName
-        
+      
+       
       itemName.addEventListener("click", () => {
-        let todoDetails = document.getElementById(`.to-do-details-${i}`);
+        const todoDetails = document.getElementById(`.to-do-details-${i}`);
 
-        if (todoDetails) {
-          todoDetails.parentNode.removeChild(todoDetails);
-        } else {
-          todoDetails = document.createElement("section");
-          todoDetails.classList.add("to-do-details");
-          todoDetails.id = `.to-do-details-${i}`;
-          
-          const itemDescription = document.createElement("p");
-          const itemInfo = document.createElement("p");
-          
-          itemDescription.innerHTML = todo.getDescription();
-          itemInfo.innerHTML = `DueTime: ${todo.getDueTime()} |
-                                Priority: ${todo.getPriority()}`;
-          
-          todoDetails.appendChild(itemDescription);
-          todoDetails.appendChild(itemInfo);
-          todoListItem.appendChild(todoDetails);
-        }
+        // Toggle to-do details 
+        (todoDetails) ? todoDetails.parentNode.removeChild(todoDetails) :
+                        RenderTodoDetails(todo, todoListItem, i);
       });
 
       todoListItem.appendChild(itemName);
@@ -61,6 +47,23 @@ const Render = (projects) => {
     });
 
     projectContainer.appendChild(todoList);
+  }
+
+  function RenderTodoDetails(todo, todoListItem, i) {
+    const todoDetails = document.createElement("section");
+    todoDetails.classList.add("to-do-details");
+    todoDetails.id = `.to-do-details-${i}`;
+    
+    const itemDescription = document.createElement("p");
+    const itemInfo = document.createElement("p");
+    
+    itemDescription.innerHTML = todo.getDescription();
+    itemInfo.innerHTML = `DueTime: ${todo.getDueTime()} |
+                          Priority: ${todo.getPriority()}`;
+    
+    todoDetails.appendChild(itemDescription);
+    todoDetails.appendChild(itemInfo);
+    todoListItem.appendChild(todoDetails);
   }
 }
 
