@@ -6,6 +6,8 @@ const Render = (projects) => {
     const projectContainer = document.createElement("article");
     const projectText = document.createElement("p");
 
+    projectText.classList.add("project-info");
+
     projectText.innerHTML = `${project.getName()} | ${project.getDescription()}`;
  
     projectText.addEventListener("click", () => {
@@ -24,16 +26,16 @@ const Render = (projects) => {
   function RenderTodo(projectContainer, project) {
     const todos = project.getTodo();
     const todoList = document.createElement("ol");
+    
     todoList.classList.add("to-do-list");
     
     todos.forEach((todo, i) => {
       const todoListItem = document.createElement("li");
       const itemName = document.createElement("p");
+      itemName.classList.add("to-do-name");
       
       itemName.innerHTML = todo.getName();
-      itemName
-      
-       
+ 
       itemName.addEventListener("click", () => {
         const todoDetails = document.getElementById(`.to-do-details-${i}`);
 
