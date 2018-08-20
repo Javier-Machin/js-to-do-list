@@ -13,12 +13,20 @@ h1 {
 
 article {
   margin-top: 5px;
-  background: rgb(240,240,240);
-  font-weight: bold;
+  background: rgb(240,240,240); 
   border-radius: 4px;
   padding: 10px;
 }
 
+.project-info {
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .to-do-list {
   font-weight: normal;
+}
+
+.to-do-name {
+  cursor: pointer;
 }
