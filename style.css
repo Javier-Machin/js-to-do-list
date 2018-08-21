@@ -10,13 +10,28 @@ html, body {
 
 h1 {
   text-align: center;
+  letter-spacing: 1px;
 }
 
 article {
   margin-top: 5px;
-  background: rgb(240,240,240); 
+  background: rgb(240,240,255); 
   border-radius: 4px;
   padding: 10px;
+}
+
+.new-project-btn {
+  background: rgb(150,150,230);
+  color: white;
+  font-size: 18px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.new-project-btn:focus {
+  outline: none;
 }
 
 .project-info, .to-do-name {
@@ -43,4 +58,8 @@ article {
   padding: 0 10px;
   margin: 0 5px;
   border-radius: 5px;
+  -webkit-user-select: none; 
+  -moz-user-select: none; 
+  -ms-user-select: none; 
+  user-select: none;
 }
