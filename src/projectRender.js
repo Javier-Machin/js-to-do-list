@@ -1,7 +1,17 @@
 // Handle all the DOM manipulation
 const Render = (projects) => {
   const contentContainer = document.getElementById("content");
+  const newProjectBtn = document.createElement("button");
+  // to be refactored
+  newProjectBtn.innerHTML = "New project";
+  newProjectBtn.classList.add("new-project-btn");
   
+  newProjectBtn.addEventListener("click", () => {
+    alert("oy");
+  });
+  
+  contentContainer.appendChild(newProjectBtn);
+  //
   projects.forEach((project) => {
     const projectContainer = document.createElement("article");
     const projectInfo = document.createElement("p");
@@ -13,7 +23,9 @@ const Render = (projects) => {
     projectInfo.innerHTML = `${project.getName()} | ${project.getDescription()}`;
     expandIcon.innerHTML = "+";
  
-    expandIcon.addEventListener("click", () => {
+    expandIcon.addEventListener("click", function() {
+      this.innerHTML == "+" ? this.innerHTML = "-" : this.innerHTML = "+";
+      
       let todoList = document.querySelector(".to-do-list");
 
       // Toggle to-do list
@@ -43,7 +55,8 @@ const Render = (projects) => {
       itemName.innerHTML = todo.getName();
       expandIcon.innerHTML = "+";
  
-      expandIcon.addEventListener("click", () => {
+      expandIcon.addEventListener("click", function() {
+        this.innerHTML == "+" ? this.innerHTML = "-" : this.innerHTML = "+";
         const todoDetails = document.getElementById(`.to-do-details-${i}`);
 
         // Toggle to-do details 
@@ -68,7 +81,7 @@ const Render = (projects) => {
     const itemInfo = document.createElement("p");
     
     itemDescription.innerHTML = todo.getDescription();
-    itemInfo.innerHTML = `DueTime: ${todo.getDueTime()} |
+    itemInfo.innerHTML = `Due Time: ${todo.getDueTime()} |
                           Priority: ${todo.getPriority()}`;
     
     todoDetails.appendChild(itemDescription);
