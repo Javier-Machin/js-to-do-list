@@ -4,13 +4,16 @@ const Render = (projects) => {
   
   projects.forEach((project) => {
     const projectContainer = document.createElement("article");
-    const projectText = document.createElement("p");
+    const projectInfo = document.createElement("p");
+    const expandIcon = document.createElement("p");
 
-    projectText.classList.add("project-info");
+    projectInfo.classList.add("project-info");
+    expandIcon.classList.add("expand-icon");
 
-    projectText.innerHTML = `${project.getName()} | ${project.getDescription()}`;
+    projectInfo.innerHTML = `${project.getName()} | ${project.getDescription()}`;
+    expandIcon.innerHTML = "+";
  
-    projectText.addEventListener("click", () => {
+    expandIcon.addEventListener("click", () => {
       let todoList = document.querySelector(".to-do-list");
 
       // Toggle to-do list
@@ -18,8 +21,8 @@ const Render = (projects) => {
                    RenderTodo(projectContainer, project);
     });
 
-    projectContainer.appendChild(projectText);
-      
+    projectContainer.appendChild(expandIcon);
+    projectContainer.appendChild(projectInfo);    
     contentContainer.appendChild(projectContainer);
   });
 
@@ -32,11 +35,15 @@ const Render = (projects) => {
     todos.forEach((todo, i) => {
       const todoListItem = document.createElement("li");
       const itemName = document.createElement("p");
+      const expandIcon = document.createElement("p");
+
       itemName.classList.add("to-do-name");
-      
+      expandIcon.classList.add("expand-icon");
+
       itemName.innerHTML = todo.getName();
+      expandIcon.innerHTML = "+";
  
-      itemName.addEventListener("click", () => {
+      expandIcon.addEventListener("click", () => {
         const todoDetails = document.getElementById(`.to-do-details-${i}`);
 
         // Toggle to-do details 
@@ -44,6 +51,7 @@ const Render = (projects) => {
                         RenderTodoDetails(todo, todoListItem, i);
       });
 
+      todoListItem.appendChild(expandIcon);
       todoListItem.appendChild(itemName);
       todoList.appendChild(todoListItem);
     });

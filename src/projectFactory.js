@@ -18,7 +18,8 @@ const Project = (name, description) => {
       const object = {
         name: todo.getName(),
         description: todo.getDescription(),
-        priority: todo.getPriority()
+        priority: todo.getPriority(),
+        dueTime: todo.getDueTime()
       }
 
       todosObject[`todo${index}`] = object;
@@ -41,11 +42,18 @@ const Project = (name, description) => {
 }
 
 // Project todos factory
-const Todo = (name, description, dueTime, priority) => {
+const Todo = (name, description, priority) => {
+  
   let isCompleted = false;
   const getName = () => name;
   const getDescription  = () => description;
-  const getDueTime = () => dueTime;
+  const getDueTime = () => {
+    const today = new Date();
+    const dd = today.getDate() + 1;
+    const mm = today.getMonth() + 1; 
+    const yyyy = today.getFullYear();
+    return `${mm}/${dd}/${yyyy}` 
+  };
   const getPriority = () => priority;
   const getCompleted = () => isComplete;
   const setCompleted = () => { 

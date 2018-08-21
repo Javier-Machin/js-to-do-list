@@ -4,6 +4,7 @@ html, body {
 
 #content {
   width: 30%;
+  min-width: 500px;
   margin: 50px auto;
 }
 
@@ -18,15 +19,28 @@ article {
   padding: 10px;
 }
 
-.project-info {
+.project-info, .to-do-name {
   font-weight: bold;
-  cursor: pointer;
+  display: inline-block;
 }
 
 .to-do-list {
-  font-weight: normal;
+
 }
 
 .to-do-name {
+
+}
+
+.expand-icon {
+  display: inline-block;
   cursor: pointer;
+  position: relative;
+  top: 4px;
+  font-size: 28px;
+  font-weight: bold;
+  background: rgb(100, 225, 100);
+  padding: 0 10px;
+  margin: 0 5px;
+  border-radius: 5px;
 }

@@ -30,8 +30,7 @@ const ProjectManager = (() => {
         for (let todo in project["todos"]) {
           newProject.addTodo(
             project["todos"][todo]["name"], 
-            project["todos"][todo]["description"], 
-            Date().toLocaleString(), 
+            project["todos"][todo]["description"],  
             project["todos"][todo]["priority"]
           );
         }
@@ -48,14 +47,12 @@ const ProjectManager = (() => {
         "Create a new folder", 
         "Open your terminal and \
         enter the command 'mkdir new_project'",
-        Date().toLocaleString(),
         "normal"
       );
 
       defaultProject.addTodo(
         "Initialize the repo", 
         "Enter the command 'git init'",
-        Date().toLocaleString(),
         "normal"
       );
 
