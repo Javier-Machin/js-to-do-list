@@ -1,20 +1,11 @@
 // Handle all the DOM manipulation
 const renderController = (() => {
   const contentContainer = document.getElementById("content");
-  const newProjectBtn = document.createElement("button");
   
-  renderNewProjectBtn();
-
-  function renderNewProjectBtn() {
-    newProjectBtn.innerHTML = "New project";
-    newProjectBtn.classList.add("new-project-btn");
-  
-    newProjectBtn.addEventListener("click", renderProjectForm);
-  
-    contentContainer.appendChild(newProjectBtn);
-  }
-
   function renderProjects(projects) {
+    
+    renderNewProjectBtn();
+
     projects.forEach((project) => {
       const projectContainer = document.createElement("article");
       const projectInfo = document.createElement("p");
@@ -41,6 +32,17 @@ const renderController = (() => {
       contentContainer.appendChild(projectContainer);
     });
   }
+
+  function renderNewProjectBtn() {
+    const newProjectBtn = document.createElement("button");
+    newProjectBtn.innerHTML = "New project";
+    newProjectBtn.id = "new-project-btn";
+  
+    newProjectBtn.addEventListener("click", renderProjectForm);
+  
+    contentContainer.appendChild(newProjectBtn);
+  }
+
 
   function renderTodo(projectContainer, project) {
     const todos = project.getTodo();
@@ -81,6 +83,7 @@ const renderController = (() => {
     const nameInput =  document.createElement("input");
     const descriptionInput = document.createElement("input");
     const submitBtn = document.createElement("button");
+    const newProjectBtn = document.getElementById("new-project-btn");
 
     nameInput.type = "text";
     nameInput.name = "name";
@@ -95,6 +98,7 @@ const renderController = (() => {
     projectForm.appendChild(nameInput);
     projectForm.appendChild(descriptionInput);
     projectForm.appendChild(submitBtn);
+
 
     contentContainer.insertBefore(projectForm, newProjectBtn.nextSibling);
   }
