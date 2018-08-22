@@ -1,7 +1,7 @@
 import { Project } from './projectFactory'
 
-const ProjectManager = (() => {
-
+//Handle project objects
+const projectController = (() => {
   const storage = window.localStorage;
 
   // Populates the projects array with either the stored projects or a default one
@@ -67,14 +67,14 @@ const ProjectManager = (() => {
       // Add the project to projects array
       projects.push(defaultProject);
     }
-
   }
 
   function save(projectsJSON) { 
     storage.setItem("projects", JSON.stringify(projectsJSON));
   }
 
-  return { load, save } 
+  return { load, save }
+
 })();
 
-export { ProjectManager }
+export { projectController }

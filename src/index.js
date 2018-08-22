@@ -1,6 +1,6 @@
-import { ProjectManager } from './projectManager'
-import { Render } from './projectRender'
+import { projectController } from './projectController'
+import { renderController } from './renderController'
 
-const projects = ProjectManager.load();
+const projects = projectController.load();
 
-Render(projects);
+renderController.renderProjects(projects);
