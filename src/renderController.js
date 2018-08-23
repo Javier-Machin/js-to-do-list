@@ -18,14 +18,21 @@ const renderController = (() => {
       projectInfo.innerHTML = `${project.getName()} | ${project.getDescription()}`;
       expandIcon.innerHTML = "+";
    
-      expandIcon.addEventListener("click", function() {
+      expandIcon.addEventListener("click", function(e) {
+        // Toggle expand icon symbol
         this.innerHTML == "+" ? this.innerHTML = "-" : this.innerHTML = "+";
         
+        // Toggle to-do list only for projects with to-dos
         let todoList = document.querySelector(".to-do-list");
+        
+        if (todoList) {
+          if (e.target.parentNode == todoList.parentNode) { 
+            projectContainer.removeChild(todoList);
+          }
+        } else {
+          renderTodo(projectContainer, project);  
+        } 
 
-        // Toggle to-do list
-        (todoList) ? projectContainer.removeChild(todoList) : 
-                     renderTodo(projectContainer, project);
       });
 
       projectContainer.appendChild(expandIcon);
@@ -39,7 +46,10 @@ const renderController = (() => {
     newProjectBtn.innerHTML = "New project";
     newProjectBtn.id = "new-project-btn";
   
-    newProjectBtn.addEventListener("click", renderProjectForm);
+    newProjectBtn.addEventListener("click", () => {
+      const form = document.querySelector(".project-form");
+      (form) ? contentContainer.removeChild(form) : renderProjectForm();
+    });
   
     contentContainer.appendChild(newProjectBtn);
   }
@@ -47,6 +57,9 @@ const renderController = (() => {
 
   function renderTodo(projectContainer, project) {
     const todos = project.getTodo();
+
+    if (todos.length === 0) { return };
+    
     const todoList = document.createElement("ol");
     
     todoList.classList.add("to-do-list");
@@ -86,6 +99,7 @@ const renderController = (() => {
     const submitBtn = document.createElement("button");
     const newProjectBtn = document.getElementById("new-project-btn");
 
+    projectForm.classList.add("project-form");
     nameInput.type = "text";
     nameInput.name = "name";
     nameInput.placeholder = "Enter your project's name";

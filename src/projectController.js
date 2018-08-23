@@ -54,8 +54,6 @@ const projectController = (() => {
         "normal"
       );
 
-      
-      
       // Use project's name as key and the formated project as value for serialization
       projectsJSON[defaultProject.getName()] = defaultProject.asJSON();
       
@@ -83,7 +81,7 @@ const projectController = (() => {
     projects.push(project);
   }
 
-  return { load, save, getProjects,  newProject }
+  return { load, save, getProjects, newProject }
 
 })();
 
