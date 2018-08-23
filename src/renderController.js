@@ -97,9 +97,7 @@ const renderController = (() => {
       const name = nameInput.value;
       const description = descriptionInput.value;
       
-      const projects = projectController.newProject(name, description);
-
-      renderProjects(projects);
+      projectController.newProject(name, description);
     });
 
     projectForm.appendChild(nameInput);

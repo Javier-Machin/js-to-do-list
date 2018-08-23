@@ -1,6 +1,8 @@
 import { projectController } from './projectController'
 import { renderController } from './renderController'
 
-const projects = projectController.load();
+projectController.load();
+
+const projects = projectController.getProjects();
 
 renderController.renderProjects(projects);

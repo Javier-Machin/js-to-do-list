@@ -4,26 +4,23 @@ import { Project } from './projectFactory'
 const projectController = (() => {
   const storage = window.localStorage;
   const projects = [];
+  const getProjects = () => projects;
   let projectsJSON = {};
   // Populates the projects array with either the stored projects or a default one
   const load = () => {
     
-    
     const localProjectsFound = !!storage.getItem("projects");
 
     (localProjectsFound) ? deserializer() : newDefaultProject();
-
-    return projects
     
     // Builds the objects from the serialized data in local storage  
     function deserializer() {
       console.log("Stored projects found!");
         
-      projectsJSON = storage.getItem("projects");
-      const projectsObjects = JSON.parse(projectsJSON);
+      projectsJSON = JSON.parse(storage.getItem("projects"));
       
-      for (let project in projectsObjects) {
-        project = JSON.parse(projectsObjects[project]);
+      for (let project in projectsJSON) {
+        project = JSON.parse(projectsJSON[project]);
 
         const newProject = Project(project["name"], project["description"]);
 
@@ -76,16 +73,17 @@ const projectController = (() => {
 
   function newProject(name, description) {
     const project = Project(name, description);
-    projectsJSON[project.getName()] = project.asJSON();
-
-    save(projectsJSON);
-
-    projects.push(project);
-
-    return projects
+    
+    updateProjects(project);
   }
 
-  return { load, save, newProject }
+  function updateProjects(project) {
+    projectsJSON[project.getName()] = project.asJSON();
+    save(projectsJSON);
+    projects.push(project);
+  }
+
+  return { load, save, getProjects,  newProject }
 
 })();
 
