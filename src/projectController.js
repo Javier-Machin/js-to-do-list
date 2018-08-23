@@ -3,11 +3,12 @@ import { Project } from './projectFactory'
 //Handle project objects
 const projectController = (() => {
   const storage = window.localStorage;
-
+  const projects = [];
+  let projectsJSON = {};
   // Populates the projects array with either the stored projects or a default one
   const load = () => {
     
-    const projects = [];
+    
     const localProjectsFound = !!storage.getItem("projects");
 
     (localProjectsFound) ? deserializer() : newDefaultProject();
@@ -18,7 +19,7 @@ const projectController = (() => {
     function deserializer() {
       console.log("Stored projects found!");
         
-      const projectsJSON = storage.getItem("projects");
+      projectsJSON = storage.getItem("projects");
       const projectsObjects = JSON.parse(projectsJSON);
       
       for (let project in projectsObjects) {
@@ -56,7 +57,7 @@ const projectController = (() => {
         "normal"
       );
 
-      const projectsJSON = {};
+      
       
       // Use project's name as key and the formated project as value for serialization
       projectsJSON[defaultProject.getName()] = defaultProject.asJSON();
@@ -73,7 +74,18 @@ const projectController = (() => {
     storage.setItem("projects", JSON.stringify(projectsJSON));
   }
 
-  return { load, save }
+  function newProject(name, description) {
+    const project = Project(name, description);
+    projectsJSON[project.getName()] = project.asJSON();
+
+    save(projectsJSON);
+
+    projects.push(project);
+
+    return projects
+  }
+
+  return { load, save, newProject }
 
 })();
 

@@ -1,3 +1,4 @@
+import { projectController } from './projectController'
 // Handle all the DOM manipulation
 const renderController = (() => {
   const contentContainer = document.getElementById("content");
@@ -93,7 +94,13 @@ const renderController = (() => {
     descriptionInput.placeholder = "Enter a short description";
     submitBtn.innerHTML = "Create";
     submitBtn.addEventListener("click", () => { 
-      alert(`${nameInput.value} ${descriptionInput.value}`) });
+      const name = nameInput.value;
+      const description = descriptionInput.value;
+      
+      const projects = projectController.newProject(name, description);
+
+      renderProjects(projects);
+    });
 
     projectForm.appendChild(nameInput);
     projectForm.appendChild(descriptionInput);
