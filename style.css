@@ -16,10 +16,14 @@ form {
 #new-project-btn {
   font-size: 18px;
   border-radius: 4px;
-  background: rgb(120,200,120);
+  background: rgb(150,150,230);
   color: white;
   border: 0;
   cursor: pointer;
+}
+
+#new-project-btn:focus {
+  outline: none;
 }
 
 input {
@@ -43,19 +47,17 @@ article {
   padding: 10px;
 }
 
-.new-project-btn {
-  background: rgb(150,150,230);
+.submit-form-btn {
+  background: rgb(120,200,120);
   color: white;
   font-size: 18px;
   padding: 0 6px;
   border: 0;
-  border-radius: 4px;
+  border-radius: 3px;
   cursor: pointer;
 }
 
-.new-project-btn:focus {
-  outline: none;
-}
+
 
 .project-info, .to-do-name {
   font-weight: bold;
