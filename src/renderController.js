@@ -107,6 +107,7 @@ const renderController = (() => {
     descriptionInput.name = "description";
     descriptionInput.placeholder = "Enter a short description";
     submitBtn.innerHTML = "Create";
+    submitBtn.classList.add("submit-form-btn");
     submitBtn.addEventListener("click", () => { 
       const name = nameInput.value;
       const description = descriptionInput.value;
