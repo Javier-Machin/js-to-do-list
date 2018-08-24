@@ -11,12 +11,16 @@ const renderController = (() => {
       const projectContainer = document.createElement("article");
       const projectInfo = document.createElement("p");
       const expandIcon = document.createElement("p");
+      const deleteIcon = document.createElement("p");
 
       projectInfo.classList.add("project-info");
       expandIcon.classList.add("expand-icon");
+      deleteIcon.classList.add("delete-icon");
 
       projectInfo.innerHTML = `${project.getName()} | ${project.getDescription()}`;
       expandIcon.innerHTML = "+";
+      deleteIcon.innerHTML = "🗑";
+      deleteIcon.title = "Remove project";
    
       expandIcon.addEventListener("click", function(e) {
         // Toggle expand icon symbol
@@ -36,7 +40,8 @@ const renderController = (() => {
       });
 
       projectContainer.appendChild(expandIcon);
-      projectContainer.appendChild(projectInfo);    
+      projectContainer.appendChild(projectInfo);
+      projectContainer.appendChild(deleteIcon);    
       contentContainer.appendChild(projectContainer);
     });
   }
@@ -68,12 +73,16 @@ const renderController = (() => {
       const todoListItem = document.createElement("li");
       const itemName = document.createElement("p");
       const expandIcon = document.createElement("p");
+      const deleteIcon = document.createElement("p");
 
       itemName.classList.add("to-do-name");
       expandIcon.classList.add("expand-icon");
+      deleteIcon.classList.add("delete-icon");
 
       itemName.innerHTML = todo.getName();
       expandIcon.innerHTML = "+";
+      deleteIcon.innerHTML = "🗑";
+      deleteIcon.title = "Remove to-do";
  
       expandIcon.addEventListener("click", function() {
         this.innerHTML == "+" ? this.innerHTML = "-" : this.innerHTML = "+";
@@ -86,6 +95,7 @@ const renderController = (() => {
 
       todoListItem.appendChild(expandIcon);
       todoListItem.appendChild(itemName);
+      todoListItem.appendChild(deleteIcon);
       todoList.appendChild(todoListItem);
     });
 
