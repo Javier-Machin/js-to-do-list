@@ -88,3 +88,19 @@ article {
   -ms-user-select: none; 
   user-select: none;
 }
+
+.delete-icon {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  font-size: 20px;
+  color: rgb(225, 100, 100);
+  padding: 0 10px;
+  margin: 0 5px;
+  border-radius: 5px;
+  -webkit-user-select: none; 
+  -moz-user-select: none; 
+  -ms-user-select: none; 
+  user-select: none;
+}
