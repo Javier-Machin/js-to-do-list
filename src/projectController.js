@@ -71,17 +71,25 @@ const projectController = (() => {
 
   function newProject(name, description) {
     const project = Project(name, description);
-    
-    updateProjects(project);
-  }
-
-  function updateProjects(project) {
     projectsJSON[project.getName()] = project.asJSON();
     save(projectsJSON);
     projects.push(project);
   }
 
-  return { load, save, getProjects, newProject }
+  function deleteProject(i) {
+    const project = projects[i];
+    delete projectsJSON[project.getName()];
+    save(projectsJSON);
+    projects.splice(i, 1);
+  }
+
+  function updateProject(project) {
+    projectsJSON[project.getName()] = project.asJSON();
+    save(projectsJSON);
+    projects.push(project);
+  }
+
+  return { load, save, getProjects, newProject, deleteProject, updateProject }
 
 })();
 

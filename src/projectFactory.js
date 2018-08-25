@@ -9,6 +9,9 @@ const Project = (name, description) => {
     const newTodo = Todo(name, description, dueTime, priority);
     todoList.push(newTodo);
   }
+  
+  // Remove to-do element from the to-do-list
+  const deleteTodo = (i) => { todoList.splice(i, 1) };
 
   // Returns the project and its to-do elements as JSON
   const asJSON = () => {
@@ -38,6 +41,7 @@ const Project = (name, description) => {
            getDescription, 
            getTodo, 
            addTodo,
+           deleteTodo,
            asJSON } 
 }
 

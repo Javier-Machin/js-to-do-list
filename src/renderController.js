@@ -7,7 +7,7 @@ const renderController = (() => {
     
     renderNewProjectBtn();
 
-    projects.forEach((project) => {
+    projects.forEach((project, i) => {
       const projectContainer = document.createElement("article");
       const projectInfo = document.createElement("p");
       const expandIcon = document.createElement("p");
@@ -37,6 +37,14 @@ const renderController = (() => {
           renderTodo(projectContainer, project);  
         } 
 
+      });
+
+      deleteIcon.addEventListener("click", function() {
+        const check = confirm("Are you sure you want to delete this project?");
+        if (check) {
+          projectController.deleteProject(i);
+          projectContainer.parentNode.removeChild(projectContainer);
+        }
       });
 
       projectContainer.appendChild(expandIcon);
@@ -91,6 +99,15 @@ const renderController = (() => {
         // Toggle to-do details 
         (todoDetails) ? todoDetails.parentNode.removeChild(todoDetails) :
                         renderTodoDetails(todo, todoListItem, i);
+      });
+
+      deleteIcon.addEventListener("click", function() {
+        const check = confirm("Are you sure you want to delete this to-do?");
+        if (check) {
+          project.deleteTodo(i);
+          projectController.updateProject(project);
+          todoListItem.parentNode.removeChild(todoListItem);
+        }
       });
 
       todoListItem.appendChild(expandIcon);
