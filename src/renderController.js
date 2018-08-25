@@ -1,4 +1,5 @@
 import { projectController } from './projectController'
+
 // Handle all the DOM manipulation
 const renderController = (() => {
   const contentContainer = document.getElementById("content");
@@ -22,21 +23,25 @@ const renderController = (() => {
       deleteIcon.innerHTML = "🗑";
       deleteIcon.title = "Remove project";
    
-      expandIcon.addEventListener("click", function(e) {
+      expandIcon.addEventListener("click", function() {
+
+        // Toggle to-do list 
+        const todoList = document.getElementById(`to-do-list-${i}`);
+        
+        (todoList) ? projectContainer.removeChild(todoList) :
+                     renderTodo(projectContainer, project, i);
+
+        // Toggle new to-do button
+        if (this.innerHTML == "+") {
+          renderNewTodoBtn(projectContainer, i);
+        } else {
+          const newTodoBtn = document.getElementById(`new-todo-btn-${i}`); 
+          projectContainer.removeChild(newTodoBtn);
+        }
+
         // Toggle expand icon symbol
         this.innerHTML == "+" ? this.innerHTML = "-" : this.innerHTML = "+";
         
-        // Toggle to-do list only for projects with to-dos
-        let todoList = document.querySelector(".to-do-list");
-        
-        if (todoList) {
-          if (e.target.parentNode == todoList.parentNode) { 
-            projectContainer.removeChild(todoList);
-          }
-        } else {
-          renderTodo(projectContainer, project);  
-        } 
-
       });
 
       deleteIcon.addEventListener("click", function() {
@@ -67,15 +72,30 @@ const renderController = (() => {
     contentContainer.appendChild(newProjectBtn);
   }
 
+  function renderNewTodoBtn(projectContainer, i) {
+    const newTodoBtn = document.createElement("button");
+    newTodoBtn.innerHTML = "New to-do";
+    newTodoBtn.id = `new-todo-btn-${i}`;
+    newTodoBtn.classList.add("new-todo-btn");
+  
+    newTodoBtn.addEventListener("click", () => {
+      const form = document.querySelector(".project-form");
+      (form) ? contentContainer.removeChild(form) : renderTodoForm();
+    });
+  
+    projectContainer.appendChild(newTodoBtn);
+  }
 
-  function renderTodo(projectContainer, project) {
+  function renderTodo(projectContainer, project, i) {
     const todos = project.getTodo();
-
-    if (todos.length === 0) { return };
-    
     const todoList = document.createElement("ol");
-    
+    const newTodoBtn = document.querySelector(".new-todo-btn")
     todoList.classList.add("to-do-list");
+    todoList.id = `to-do-list-${i}`;
+
+    if (todos.length === 0) {
+      return 
+    };
     
     todos.forEach((todo, i) => {
       const todoListItem = document.createElement("li");
@@ -113,6 +133,7 @@ const renderController = (() => {
       todoListItem.appendChild(expandIcon);
       todoListItem.appendChild(itemName);
       todoListItem.appendChild(deleteIcon);
+      
       todoList.appendChild(todoListItem);
     });
 
@@ -145,7 +166,6 @@ const renderController = (() => {
     projectForm.appendChild(nameInput);
     projectForm.appendChild(descriptionInput);
     projectForm.appendChild(submitBtn);
-
 
     contentContainer.insertBefore(projectForm, newProjectBtn.nextSibling);
   }
