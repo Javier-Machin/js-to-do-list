@@ -26,6 +26,20 @@ form {
   outline: none;
 }
 
+.new-todo-btn {
+  font-size: 18px;
+  border-radius: 4px;
+  background: rgb(150,150,230);
+  color: white;
+  border: 0;
+  cursor: pointer;
+  display: block;
+}
+
+.new-todo-btn:focus {
+  outline: none;
+}
+
 input {
   display: block;
   margin: 5px 0;
