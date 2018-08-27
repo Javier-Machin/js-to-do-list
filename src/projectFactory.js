@@ -5,8 +5,8 @@ const Project = (name, description) => {
   const getTodo = () => todoList;
   
   // Add a new to-do element to the to-do-list
-  const addTodo = (name, description, dueTime, priority) => {
-    const newTodo = Todo(name, description, dueTime, priority);
+  const addTodo = (name, description, priority) => {
+    const newTodo = Todo(name, description, priority);
     todoList.push(newTodo);
   }
   
@@ -59,7 +59,7 @@ const Todo = (name, description, priority) => {
     return `${mm}/${dd}/${yyyy}` 
   };
   const getPriority = () => priority;
-  const getCompleted = () => isComplete;
+  const getCompleted = () => isCompleted;
   const setCompleted = () => { 
     isCompleted === false ? isCompleted = true : isCompleted = false;
   }

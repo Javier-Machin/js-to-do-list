@@ -5,7 +5,6 @@ const renderController = (() => {
   const contentContainer = document.getElementById("content");
   
   function renderProjects(projects) {
-    
     renderNewProjectBtn();
 
     projects.forEach((project, i) => {
@@ -33,7 +32,7 @@ const renderController = (() => {
 
         // Toggle new to-do button
         if (this.innerHTML == "+") {
-          renderNewTodoBtn(projectContainer, i);
+          renderNewTodoBtn(projectContainer, project, i);
         } else {
           const newTodoBtn = document.getElementById(`new-todo-btn-${i}`); 
           projectContainer.removeChild(newTodoBtn);
@@ -72,15 +71,15 @@ const renderController = (() => {
     contentContainer.appendChild(newProjectBtn);
   }
 
-  function renderNewTodoBtn(projectContainer, i) {
+  function renderNewTodoBtn(projectContainer, project, i) {
     const newTodoBtn = document.createElement("button");
     newTodoBtn.innerHTML = "New to-do";
     newTodoBtn.id = `new-todo-btn-${i}`;
     newTodoBtn.classList.add("new-todo-btn");
   
     newTodoBtn.addEventListener("click", () => {
-      const form = document.querySelector(".project-form");
-      (form) ? contentContainer.removeChild(form) : renderTodoForm();
+      const form = document.getElementById(`to-do-form-${i}`);
+      (form) ? projectContainer.removeChild(form) : renderTodoForm(projectContainer, project, i);
     });
   
     projectContainer.appendChild(newTodoBtn);
@@ -89,14 +88,12 @@ const renderController = (() => {
   function renderTodo(projectContainer, project, i) {
     const todos = project.getTodo();
     const todoList = document.createElement("ol");
-    const newTodoBtn = document.querySelector(".new-todo-btn")
     todoList.classList.add("to-do-list");
     todoList.id = `to-do-list-${i}`;
 
-    if (todos.length === 0) {
-      return 
-    };
+    if (todos.length === 0) { return };
     
+    // Display each to-do
     todos.forEach((todo, i) => {
       const todoListItem = document.createElement("li");
       const itemName = document.createElement("p");
@@ -168,6 +165,44 @@ const renderController = (() => {
     projectForm.appendChild(submitBtn);
 
     contentContainer.insertBefore(projectForm, newProjectBtn.nextSibling);
+  }
+
+  function renderTodoForm(projectContainer, project, i) {
+    const todoForm = document.createElement("form");
+    const nameInput =  document.createElement("input");
+    const descriptionInput = document.createElement("input");
+    const priorityInput = document.createElement("input");
+    const submitBtn = document.createElement("button");
+
+    todoForm.classList.add("to-do-form");
+    todoForm.id = `to-do-form-${i}`;
+
+    nameInput.type = "text";
+    nameInput.name = "name";
+    nameInput.placeholder = "Enter your project's name";
+    descriptionInput.type = "text";
+    descriptionInput.name = "description";
+    descriptionInput.placeholder = "Enter a short description";
+    priorityInput.type = "text";
+    priorityInput.name = "priority";
+    priorityInput.placeholder = "Enter priority"
+    submitBtn.innerHTML = "Create";
+    submitBtn.classList.add("submit-form-btn");
+    submitBtn.addEventListener("click", () => { 
+      const name = nameInput.value;
+      const description = descriptionInput.value;
+      const priority = priorityInput.value;
+      
+      project.addTodo(name, description, priority);
+      projectController.updateProject(project);
+    });
+
+    todoForm.appendChild(nameInput);
+    todoForm.appendChild(descriptionInput);
+    todoForm.appendChild(priorityInput);
+    todoForm.appendChild(submitBtn);
+
+    projectContainer.appendChild(todoForm);
   }
 
   function renderTodoDetails(todo, todoListItem, i) {
