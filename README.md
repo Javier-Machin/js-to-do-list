@@ -7,6 +7,6 @@ Some of it's features are:
 * Projects are saved to local storage
 * Simple input validation
 * Toggle To-Dos status on click
-* Separate DOM and Objects modules source
+* Separate DOM and Objects source modules 
 
 Check it online [here](https://javier-machin.github.io/js-to-do-list/)
