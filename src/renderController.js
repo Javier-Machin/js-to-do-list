@@ -26,9 +26,14 @@ const renderController = (() => {
 
         // Toggle to-do list 
         const todoList = document.getElementById(`to-do-list-${i}`);
-        
-        (todoList) ? projectContainer.removeChild(todoList) :
-                     renderTodo(projectContainer, project, i);
+        const todoForm = document.getElementById(`to-do-form-${i}`);
+
+        if (todoList) { 
+          projectContainer.removeChild(todoList);
+          if (todoForm) { projectContainer.removeChild(todoForm) };
+        } else {
+          renderTodo(projectContainer, project, i);
+        }
 
         // Toggle new to-do button
         if (this.innerHTML == "+") {
@@ -97,14 +102,37 @@ const renderController = (() => {
     todos.forEach((todo, i) => {
       const todoListItem = document.createElement("li");
       const itemName = document.createElement("p");
+      const status = document.createElement("p");
       const expandIcon = document.createElement("p");
       const deleteIcon = document.createElement("p");
 
+      const checkStatus = () => {
+        if (todo.getCompleted() === "true") {
+          status.innerHTML = "Done";
+          status.classList.remove("red");
+          status.classList.add("green");
+        } else {
+          status.innerHTML = "Pending";
+          status.classList.remove("green");
+          status.classList.add("red");
+        }
+      }
+
       itemName.classList.add("to-do-name");
+      status.classList.add("to-do-status");
       expandIcon.classList.add("expand-icon");
       deleteIcon.classList.add("delete-icon");
 
       itemName.innerHTML = todo.getName();
+      checkStatus();
+
+      status.addEventListener("click", () => { 
+        todo.setCompleted();
+        project.setTodo(i, todo);
+        projectController.updateProject(project);
+        checkStatus();
+      });
+
       expandIcon.innerHTML = "+";
       deleteIcon.innerHTML = "🗑";
       deleteIcon.title = "Remove to-do";
@@ -129,6 +157,7 @@ const renderController = (() => {
 
       todoListItem.appendChild(expandIcon);
       todoListItem.appendChild(itemName);
+      todoListItem.appendChild(status);
       todoListItem.appendChild(deleteIcon);
       
       todoList.appendChild(todoListItem);
@@ -156,8 +185,11 @@ const renderController = (() => {
     submitBtn.addEventListener("click", () => { 
       const name = nameInput.value;
       const description = descriptionInput.value;
+
+      if (inputValidation("project", name, description)) {
+        projectController.newProject(name, description);
+      }
       
-      projectController.newProject(name, description);
     });
 
     projectForm.appendChild(nameInput);
@@ -179,7 +211,7 @@ const renderController = (() => {
 
     nameInput.type = "text";
     nameInput.name = "name";
-    nameInput.placeholder = "Enter your project's name";
+    nameInput.placeholder = "Enter to-do name";
     descriptionInput.type = "text";
     descriptionInput.name = "description";
     descriptionInput.placeholder = "Enter a short description";
@@ -193,8 +225,10 @@ const renderController = (() => {
       const description = descriptionInput.value;
       const priority = priorityInput.value;
       
-      project.addTodo(name, description, priority);
-      projectController.updateProject(project);
+      if (inputValidation("todo", name, description, priority)) {
+        project.addTodo(name, description, priority);
+        projectController.updateProject(project);
+      }
     });
 
     todoForm.appendChild(nameInput);
@@ -220,6 +254,45 @@ const renderController = (() => {
     todoDetails.appendChild(itemDescription);
     todoDetails.appendChild(itemInfo);
     todoListItem.appendChild(todoDetails);
+  }
+
+  function inputValidation(
+    type = "null",
+    name = "null", 
+    description = "null", 
+    priority = "null"
+  ) {
+
+    if (name.length > 15) {
+      alert("Name too long, max 15 characters");
+      return false
+    }
+
+    if (type == "project" && description.length > 20) {
+      alert("Description too long, max 20 characters");
+      return false
+    } else if (type == "to-do" && description.length > 30) {
+      alert("Description too long, max 30 characters");
+      return false
+    }
+
+    if (priority !== "null" && priority !== "Low" && 
+        priority !== "Normal" && priority !== "High") {
+      alert("Priority only can be 'Low', 'Normal' or 'High'");
+      return false
+    }
+
+    if (name.length < 4) {
+      alert("Name too short, min 4 characters");
+      return false
+    }
+
+    if (description.length < 4) {
+      alert("Description too short, min 4 characters");
+      return false
+    }
+
+    return true
   }
 
   return { renderProjects }

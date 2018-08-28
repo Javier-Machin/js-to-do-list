@@ -3,10 +3,11 @@ const Project = (name, description) => {
   const getName = () => name;
   const getDescription  = () => description;
   const getTodo = () => todoList;
+  const setTodo = (i, todo) => { todoList[i] = todo };
   
   // Add a new to-do element to the to-do-list
-  const addTodo = (name, description, priority) => {
-    const newTodo = Todo(name, description, priority);
+  const addTodo = (name, description, priority, isCompleted = "false") => {
+    const newTodo = Todo(name, description, priority, isCompleted);
     todoList.push(newTodo);
   }
   
@@ -22,7 +23,8 @@ const Project = (name, description) => {
         name: todo.getName(),
         description: todo.getDescription(),
         priority: todo.getPriority(),
-        dueTime: todo.getDueTime()
+        dueTime: todo.getDueTime(),
+        isCompleted: todo.getCompleted()
       }
 
       todosObject[`todo${index}`] = object;
@@ -39,16 +41,16 @@ const Project = (name, description) => {
 
   return { getName, 
            getDescription, 
-           getTodo, 
+           getTodo,
+           setTodo, 
            addTodo,
            deleteTodo,
            asJSON } 
 }
 
 // Project todos factory
-const Todo = (name, description, priority) => {
+const Todo = (name, description, priority, isCompleted) => {
   
-  let isCompleted = false;
   const getName = () => name;
   const getDescription  = () => description;
   const getDueTime = () => {
@@ -61,7 +63,7 @@ const Todo = (name, description, priority) => {
   const getPriority = () => priority;
   const getCompleted = () => isCompleted;
   const setCompleted = () => { 
-    isCompleted === false ? isCompleted = true : isCompleted = false;
+    isCompleted === "false" ? isCompleted = "true" : isCompleted = "false";
   }
 
   return { getName, 

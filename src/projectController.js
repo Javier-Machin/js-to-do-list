@@ -29,7 +29,8 @@ const projectController = (() => {
           newProject.addTodo(
             project["todos"][todo]["name"], 
             project["todos"][todo]["description"],  
-            project["todos"][todo]["priority"]
+            project["todos"][todo]["priority"],
+            project["todos"][todo]["isCompleted"]
           );
         }
 
@@ -45,13 +46,16 @@ const projectController = (() => {
         "Create a new folder", 
         "Open your terminal and \
         enter the command 'mkdir new_project'",
-        "normal"
+        "Normal",
+        "false"
+
       );
 
       defaultProject.addTodo(
         "Initialize the repo", 
         "Enter the command 'git init'",
-        "normal"
+        "Normal",
+        "false"
       );
 
       // Use project's name as key and the formated project as value for serialization

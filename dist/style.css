@@ -51,7 +51,10 @@ input {
 
 h1 {
   text-align: center;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  opacity: 0.8;
+  font-family: 'Kaushan Script', cursive;
+
 }
 
 article {
@@ -71,19 +74,31 @@ article {
   cursor: pointer;
 }
 
+.red {
+  color: red;
+}
 
+.green {
+  color: green;
+}
 
 .project-info, .to-do-name {
   font-weight: bold;
   display: inline-block;
 }
 
-.to-do-list {
-
+.to-do-status {
+  display: inline-block;
+  margin-left: 5px;
+  cursor: pointer;
 }
 
 .to-do-name {
+  display: inline-block;
+}
 
+.to-do-details {
+  opacity: 0.8;
 }
 
 .expand-icon {
