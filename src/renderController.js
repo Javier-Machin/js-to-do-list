@@ -170,73 +170,123 @@ const renderController = (() => {
     const projectForm = document.createElement("form");
     const nameInput =  document.createElement("input");
     const descriptionInput = document.createElement("input");
-    const submitBtn = document.createElement("button");
+    const submitBtn = document.createElement("input");
     const newProjectBtn = document.getElementById("new-project-btn");
 
+    projectForm.onsubmit = sendForm;
     projectForm.classList.add("project-form");
+    
     nameInput.type = "text";
     nameInput.name = "name";
-    nameInput.placeholder = "Enter your project's name";
+    nameInput.placeholder = "Enter to-do name";
+    nameInput.pattern = ".{3,30}";
+    nameInput.title = 'Must be between 3 and 30 characters long';
+    nameInput.required = true;
+    
     descriptionInput.type = "text";
     descriptionInput.name = "description";
     descriptionInput.placeholder = "Enter a short description";
+    descriptionInput.pattern = ".{3,50}";
+    descriptionInput.title = 'Must be between 3 and 50 characters long';
+    descriptionInput.required = true;
+    
+    submitBtn.type = "submit";
     submitBtn.innerHTML = "Create";
     submitBtn.classList.add("submit-form-btn");
-    submitBtn.addEventListener("click", () => { 
-      const name = nameInput.value;
-      const description = descriptionInput.value;
-
-      if (inputValidation("project", name, description)) {
-        projectController.newProject(name, description);
-      }
-      
-    });
-
+        
     projectForm.appendChild(nameInput);
     projectForm.appendChild(descriptionInput);
     projectForm.appendChild(submitBtn);
 
     contentContainer.insertBefore(projectForm, newProjectBtn.nextSibling);
+
+    function sendForm() {
+      const name = nameInput.value;
+      const description = descriptionInput.value;
+      
+      projectController.newProject(name, description);
+    }
   }
 
   function renderTodoForm(projectContainer, project, i) {
     const todoForm = document.createElement("form");
     const nameInput =  document.createElement("input");
     const descriptionInput = document.createElement("input");
-    const priorityInput = document.createElement("input");
-    const submitBtn = document.createElement("button");
+    const priorityTitle = document.createElement("h3");
+    const lowLabel = document.createElement("label");
+    const priorityLow = document.createElement("input");
+    const normalLabel = document.createElement("label");
+    const priorityNormal = document.createElement("input");
+    const highLabel = document.createElement("label");
+    const priorityHigh = document.createElement("input");
+    const submitBtn = document.createElement("input");
 
     todoForm.classList.add("to-do-form");
     todoForm.id = `to-do-form-${i}`;
+    todoForm.onsubmit = sendForm; 
 
     nameInput.type = "text";
     nameInput.name = "name";
     nameInput.placeholder = "Enter to-do name";
+    nameInput.pattern = ".{3,30}";
+    nameInput.title = 'Must be between 3 and 30 characters long';
+    nameInput.required = true;
+
     descriptionInput.type = "text";
     descriptionInput.name = "description";
     descriptionInput.placeholder = "Enter a short description";
-    priorityInput.type = "text";
-    priorityInput.name = "priority";
-    priorityInput.placeholder = "Enter priority"
+    descriptionInput.pattern = ".{3,50}";
+    descriptionInput.title = 'Must be between 3 and 50 characters long';
+    descriptionInput.required = true;
+
+    priorityTitle.innerHTML = "Priority: ";
+    
+    lowLabel.innerHTML = "Low";
+    priorityLow.type = "radio";
+    priorityLow.name = "priority";
+    priorityLow.value = "Low";
+    priorityLow.classList.add("radio-btn");
+    
+    normalLabel.innerHTML = "Normal";
+    priorityNormal.type = "radio";
+    priorityNormal.name = "priority";
+    priorityNormal.value = "Normal";
+    priorityNormal.checked = true;
+    priorityNormal.classList.add("radio-btn");
+    
+    highLabel.innerHTML = "High";
+    priorityHigh.type = "radio";
+    priorityHigh.name = "priority";
+    priorityHigh.value = "High";
+    priorityHigh.classList.add("radio-btn");
+
+    submitBtn.type = "submit";
     submitBtn.innerHTML = "Create";
     submitBtn.classList.add("submit-form-btn");
-    submitBtn.addEventListener("click", () => { 
-      const name = nameInput.value;
-      const description = descriptionInput.value;
-      const priority = priorityInput.value;
-      
-      if (inputValidation("todo", name, description, priority)) {
-        project.addTodo(name, description, priority);
-        projectController.updateProject(project);
-      }
-    });
 
     todoForm.appendChild(nameInput);
     todoForm.appendChild(descriptionInput);
-    todoForm.appendChild(priorityInput);
+
+    todoForm.appendChild(priorityTitle);
+    lowLabel.insertBefore(priorityLow, lowLabel.firstChild);
+    todoForm.appendChild(lowLabel);
+    normalLabel.insertBefore(priorityNormal, normalLabel.firstChild);
+    todoForm.appendChild(normalLabel);
+    highLabel.insertBefore(priorityHigh, highLabel.firstChild);
+    todoForm.appendChild(highLabel);
+    
     todoForm.appendChild(submitBtn);
 
     projectContainer.appendChild(todoForm);
+
+    function sendForm() {
+      const name = nameInput.value;
+      const description = descriptionInput.value;
+      const priority = document.querySelector('input[name="priority"]:checked').value;
+      
+      project.addTodo(name, description, priority);
+      projectController.updateProject(project);
+    }
   }
 
   function renderTodoDetails(todo, todoListItem, i) {
@@ -254,45 +304,6 @@ const renderController = (() => {
     todoDetails.appendChild(itemDescription);
     todoDetails.appendChild(itemInfo);
     todoListItem.appendChild(todoDetails);
-  }
-
-  function inputValidation(
-    type = "null",
-    name = "null", 
-    description = "null", 
-    priority = "null"
-  ) {
-
-    if (name.length > 15) {
-      alert("Name too long, max 15 characters");
-      return false
-    }
-
-    if (type == "project" && description.length > 20) {
-      alert("Description too long, max 20 characters");
-      return false
-    } else if (type == "to-do" && description.length > 30) {
-      alert("Description too long, max 30 characters");
-      return false
-    }
-
-    if (priority !== "null" && priority !== "Low" && 
-        priority !== "Normal" && priority !== "High") {
-      alert("Priority only can be 'Low', 'Normal' or 'High'");
-      return false
-    }
-
-    if (name.length < 4) {
-      alert("Name too short, min 4 characters");
-      return false
-    }
-
-    if (description.length < 4) {
-      alert("Description too short, min 4 characters");
-      return false
-    }
-
-    return true
   }
 
   return { renderProjects }
