@@ -53,6 +53,10 @@ input:invalid {
   border: 1px solid red;
 }
 
+input:focus {
+  outline: none;
+}
+
 
 label {
   display: block;
